@@ -1,27 +1,27 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   StyledTableCell,
   StyledTableRow,
-  useStyles
-} from "./../Components/Style";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { connect } from "react-redux";
-import EditIcon from "@material-ui/icons/Edit";
-import { fetchContacts, DeleteContacts } from "./../Actions/index";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { Link } from "react-router-dom";
+  useStyles,
+} from "./../Components/Style"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableHead from "@material-ui/core/TableHead"
+import TableRow from "@material-ui/core/TableRow"
+import Paper from "@material-ui/core/Paper"
+import { connect } from "react-redux"
+import EditIcon from "@material-ui/icons/Edit"
+import { fetchContacts, DeleteContacts } from "./../Actions/index"
+import DeleteIcon from "@material-ui/icons/Delete"
+import { Link } from "react-router-dom"
 
 class ContactList extends Component {
   UNSAFE_componentWillMount() {
-    this.props.dispatch(fetchContacts());
+    this.props.dispatch(fetchContacts())
   }
-  deleteContact = id => {
-    this.props.dispatch(DeleteContacts(id));
-  };
+  deleteContact = (id) => {
+    this.props.dispatch(DeleteContacts(id))
+  }
 
   render() {
     return (
@@ -34,18 +34,31 @@ class ContactList extends Component {
           <Table className={useStyles.table} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>name</StyledTableCell>
-                <StyledTableCell>phone</StyledTableCell>
+                <StyledTableCell>Name</StyledTableCell>
+                <StyledTableCell>Phone</StyledTableCell>
+                <StyledTableCell>Email</StyledTableCell>
+                <StyledTableCell>Location</StyledTableCell>
+                <StyledTableCell>Photo</StyledTableCell>
+
                 <StyledTableCell>Action</StyledTableCell>
               </TableRow>
             </TableHead>
             {this.props.contacts ? (
               <TableBody>
                 {this.props.contacts &&
-                  this.props.contacts.map(contact => (
+                  this.props.contacts.map((contact) => (
                     <StyledTableRow key={contact.id}>
                       <StyledTableCell>{contact.name}</StyledTableCell>
                       <StyledTableCell>{contact.contact}</StyledTableCell>
+                      <StyledTableCell>{contact.email}</StyledTableCell>
+                      <StyledTableCell>{contact.location}</StyledTableCell>
+                      <StyledTableCell>
+                        <img
+                          src={contact.photo}
+                          alt={contact.photo}
+                          style={{ height: "40px", width: "40px" }}
+                        />
+                      </StyledTableCell>
                       <StyledTableCell>
                         <Link
                           to={`/edit/${contact.id}`}
@@ -69,12 +82,12 @@ class ContactList extends Component {
           </Table>
         </Paper>
       </div>
-    );
+    )
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    contacts: state.contact
-  };
-};
-export default connect(mapStateToProps)(ContactList);
+    contacts: state.contact,
+  }
+}
+export default connect(mapStateToProps)(ContactList)
